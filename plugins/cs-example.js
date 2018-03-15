@@ -10,7 +10,7 @@ var plugin = {
   description: 'Central System plugin example',
   author: '',
 
-  ocpp_version: '1.6',
+  ocpp_version: '1.5',
   system: 'cs',
 
   onLoad: function() {

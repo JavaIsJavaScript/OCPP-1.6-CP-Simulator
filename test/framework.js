@@ -38,7 +38,7 @@ var Test = {
     var args = process.argv.slice(2),
         options = {
           system: opt.system || 'cp',
-          version: opt.version || '1.6',
+          version: opt.version || '1.5',
           transport: opt.transport || args[0] || 'websocket'
         },
         args = args.slice(1);

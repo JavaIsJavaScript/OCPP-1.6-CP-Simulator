@@ -10,7 +10,7 @@ var cbxs = {
   description: 'CBXS automatic mode description',
   author: '',
 
-  ocpp_version: '1.6',
+  ocpp_version: '1.5',
   system: 'cp',
 
   onLoad: function() {

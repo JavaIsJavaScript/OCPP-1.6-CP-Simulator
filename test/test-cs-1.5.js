@@ -5,7 +5,7 @@
 var Test = require('./framework.js').Test;
 
 // initialize
-Test.init( { system: 'cs', version: '1.6' } );
+Test.init( { system: 'cs', version: '1.5' } );
 
 // fill the array with the commands to test
 Test.commands = [
