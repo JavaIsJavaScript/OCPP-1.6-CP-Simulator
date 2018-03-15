@@ -16,7 +16,10 @@ See: [1.5Sim Branch](https://github.com/JavaIsJavaScript/ocpp1.6-CP-Simulator/tr
 
 [CREDITS](http://www.gir.fr/ocppjs/)
 
+----
+
 ### Glitches
 + Calling UnlockConnector.req from the Central System  
 + Calling SendLocalList.req from the Central System  
+
 Both these functions will reconnect the simulated Charge Point but console shows that it still recieves the request and accepts it, this is just a glitch since this whole 1.6 Simulator is hacky.
