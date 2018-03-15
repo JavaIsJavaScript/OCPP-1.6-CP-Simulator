@@ -1,5 +1,5 @@
 # ocpp1.6-CP-Simulator
-Hacky but it works for testing purposes (Not fully optimized since it just acts like a 1.6 CP)
+Hacky but it works for testing purposes
 
 How to run:
 node gir-ocppjs.js start_cp ws://127.0.0.1:8080/steve/websocket/CentralSystemService REE002
