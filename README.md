@@ -1,4 +1,4 @@
-# ocpp1.6-CP-Simulator
+# OCPP 1.6 Charge Point Simulator
 Hacky but it works for testing purposes
 
 This program requires Node.js (http://nodejs.org/). Third-party packages can be installed with the npm utility. Currently, ocppjs depends on 'websocket', 'xml2js', 'node-expat', 'request' and 'jayschema' packages:
@@ -18,12 +18,11 @@ Where REE002 will be the name of the Charge Point and ws://127.0.0.1:8080/steve/
 
 See: [1.5Sim Branch](https://github.com/JavaIsJavaScript/ocpp1.6-CP-Simulator/tree/1.5-Simulator) for 1.5 Simulator, works the same as this one.
 
-[CREDITS](http://www.gir.fr/ocppjs/)
-
-----
-
 ### Glitches
 + Calling UnlockConnector.req from the Central System  
 + Calling SendLocalList.req from the Central System  
 
 Both these functions will reconnect the simulated Charge Point but console shows that it still recieves the request and accepts it, this is just a glitch since this whole 1.6 Simulator is hacky.
+
+
+[CREDITS](http://www.gir.fr/ocppjs/)
