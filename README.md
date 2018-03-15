@@ -2,9 +2,11 @@
 Hacky but it works for testing purposes
 
 This program requires Node.js (http://nodejs.org/). Third-party packages can be installed with the npm utility. Currently, ocppjs depends on 'websocket', 'xml2js', 'node-expat', 'request' and 'jayschema' packages:
+
+### Don't forget to do this!!!!!!
 + npm install  
 
-How to run:  
+### Running the Simulator
 + node gir-ocppjs.js  
 
 Or just run this for simulating a ChargePoint  
