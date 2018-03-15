@@ -1,0 +1,391 @@
+<h1>Getting Started With Plugins</h1>
+
+<p><strong>OCPPJS 1.0.0</strong> introduces a new feature : the plugins. This document is here for helping developers to write plugins for the simulator. It also contains the API documentation.</p>
+
+<p>Writing plugins allow yourself to define the behavior of the simulator without modifying the source code of the program. A plugin consists of one JavaScript file which can be loaded by the simulator.</p>
+
+<h2>API Documentation</h2>
+
+<h3>Input/Output API</h3>
+
+<table>
+    <tr>
+        <th>Function</th>
+        <th style="width: 70%;">Example</th>
+    </tr>
+    <tr>
+        <td><b>log(message)</b><br />
+        Display <i>message</i> to screen.</td>
+        <td><pre>log("Plugin Started !");</pre></td>
+    </tr>
+    <tr>
+        <td><b>parse(line)</b><br />
+        Parse a raw command line to an object.</td>
+        <td><pre>parse('show cache'); 
+        => {command: 'show', arguments: ['cache']};</pre></td> 
+    </tr>
+</table>
+
+<h3>Simulator API</h3>
+
+<table>
+    <tr>
+        <th>Function</th>
+        <th style="width: 70%;">Example</th>
+    </tr>
+    <tr>
+        <td><b>cp.call(procName, args)</b><br/>
+        Process a RPC call from charge point to central system.</td>
+        <td><pre>cp.call('BootNotification');</pre></td>
+    </tr>
+    <tr>
+        <td><b>cs.call(procName, args)</b><br />
+        Process a remote RPC call from a central system to a charge point.</td>
+        <td><pre>cs.call('ClearCache');</pre></td> 
+    </tr>
+</table>
+
+<h3>Callback API</h3>
+
+<table>
+    <tr>
+        <th>Function</th>
+        <th style="width: 70%;">Example</th>
+    </tr>
+    <tr>
+        <td><b>onResult(procName, handlerFunc)</b><br />
+        Trigger the <i>handlerFunc</i> function when a call result for the <i>procName</i> procedure is received.</td>
+        <td>
+        <pre>
+onResult('BootNotification', function(values)   {
+  log('Heartbeat interval: '+ values.heartbeatInterval);
+});
+        </pre>
+        </td>
+    </tr>
+    <tr>
+        <td><b>onCall(procName, handlerFunc)</b><br />
+        Trigger the <i>handlerFunc</i> function when a call message for the <i>procName</i> procedure is received.</td>
+        <td>
+        <pre>
+onCall('ClearCache', function(values) {
+  // clear the cache
+});
+        </pre>
+        </td>
+    </tr>
+    <tr>
+        <td><b>onConnectionEvent(handlerFunc)</b><br />
+        For a <b>Charge Point</b> simulator, trigger the <i>handlerFunc</i> function when a new connection event occurs. Event: <i>connected</i>, <i>disconnected</i></td>
+        <td>
+        <pre>
+onConnectionEvent(function(type, cpId) {
+  if(type == 'connected')
+    log('Connected to Central System.');
+  else if (type == 'disconnected')
+    log('Disconnected to Central System.');
+});
+        </pre>
+        </td>
+    </tr>
+    <tr>
+        <td><b>onClientConnectionEvent(handlerFunc)</b><br />
+        For a <b>Central System.</b> simulator, trigger the <i>handlerFunc</i> function when a new connection event occurs. Event: <i>connected</i>, <i>disconnected</i></td>
+        <td>
+        <pre>
+onClientConnectionEvent(function(type, cpId) {
+  if(type == 'connected')
+    log('Connected to Central System.');
+  else if (type == 'disconnected')
+    log('Disconnected to Central System.');
+});
+        </pre>
+        </td>
+    </tr>
+    <tr>
+        <td><b>onCommand(handlerFunc)</b><br />
+        Trigger the <i>handlerFunc</i> function when a new command is entered on the command line interface. If the <i>handlerFunc</i> function interprets the command, it must return <b>true<b>.</td>
+        <td>
+        <pre>
+onCommand(function(command) {
+  var commandObj = parse(command);
+
+  if(commandObj.command == 'cache')
+    log('Cache content:'+ cache);
+});
+        </pre>
+        </td>
+    </tr>
+    <tr>
+        <td><b>onIdle(handlerFunc)</b><br />
+        Trigger the <i>handlerFunc</i> function when the simulator has no message to send.</td>
+        <td>
+        <pre>
+onIdle(function(command) {
+  // ...
+});
+        </pre>
+        </td>
+    </tr>
+</table>
+
+<h2>A Plugin Example</h2>
+
+<p>First of all, the plugins need to be in the <strong><em>plugins/</em></strong> folder which already contains some examples.</p>
+
+<p>A primitive plugin template file looks like:</p>
+
+<pre><code>var myPlugin = {
+  name: '',
+  description: '',
+  author: '',
+
+  ocpp_version: '',
+  system: '',
+
+  onLoad: function() {
+
+  }
+};
+
+export.modules = myPlugin;
+</code></pre>
+
+<p>Every plugin <strong>must</strong> have a <em>onLoad</em> function, this is the entry point, the function triggered right after loading the plugin. All the other fields are optional.</p>
+
+<p>Within the framework of this document, we are going to build a <em>charge point plugin</em> which:</p>
+
+<ul>
+<li>Sends a <em>BootNotification</em> at start.</li>
+<li>Sets a result function for the <em>BootNotification</em> procedure.</li>
+<li>Calls a <em>StartTransaction</em> procedure when a <em>RemoteStartTransaction</em> is received.</li>
+<li>Displays a message when the connection is lost.</li>
+<li>Create a new "hello" command for introducing the plugin.</li>
+</ul>
+
+<h3>Calling a procedure</h3>
+
+<p>Right after loading our plugin, this one sends a <em>BootNotification</em> to the Central System.</p>
+
+<pre><code>var myPlugin = {
+  name: 'My Plugin',
+  description: 'Plugin example with the tutorial',
+  author: 'myself',
+
+  ocpp_version: '1.6',
+  system: 'cs',
+
+  onLoad: function() {
+    var self = this;
+
+    self.cp.call('BootNotification');
+  }
+};
+
+export.modules = myPlugin;
+</code></pre>
+
+<p>The API also provides a second parameter for the <em>call</em> function in order to customize the arguments of the message.</p>
+
+<pre><code>var myPlugin = {
+  name: 'My Plugin',
+  description: 'Charge point plugin example for the tutorial',
+  author: 'myself',
+
+  ocpp_version: '1.6',
+  system: 'cs',
+
+  onLoad: function() {
+    var self = this;
+
+    self.cp.call('BootNotification', {
+      chargePointVendor: "Vendor",
+      chargePointModel: "Model"
+    });
+  }
+};
+
+export.modules = myPlugin;
+</code></pre>
+
+<h3>Setting a result function</h3>
+
+<p>We want our plugin to display the <em>heartbeatInterval</em> when it receives a response from the <em>BootNotification</em> call. So, we need to write an <em>onResult</em> callback function.</p>
+
+<pre><code>var myPlugin = {
+  name: 'My Plugin',
+  description: 'Charge point plugin example for the tutorial',
+  author: 'myself',
+
+  ocpp_version: '1.6',
+  system: 'cs',
+
+  onLoad: function() {
+    var self = this;
+
+    self.cp.call('BootNotification', {
+      chargePointVendor: "Vendor",
+      chargePointModel: "Model"
+    });
+
+    self.onResult('BootNotification', function(values) {
+      self.log('Heartbeat interval value:' + values.heartbeatInterval);
+    });
+  }
+};
+
+export.modules = myPlugin;
+</code></pre>
+
+<h3>Setting a call function</h3>
+
+<p>We want our <em>charge point</em> to start a new transaction when the central system calls a <em>RemoteStartTransaction</em> remote procedure.</p>
+
+<pre><code>var myPlugin = {
+  name: 'My Plugin',
+  description: 'Charge point plugin example for the tutorial',
+  author: 'myself',
+
+  ocpp_version: '1.6',
+  system: 'cs',
+
+  onLoad: function() {
+    var self = this;
+
+    self.cp.call('BootNotification', {
+      chargePointVendor: "Vendor",
+      chargePointModel: "Model"
+    });
+
+    self.onResult('BootNotification', function(values) {
+      self.log('Heartbeat interval value:' + values.heartbeatInterval);
+    });
+
+    self.onCall('RemoteStartTransaction', function(values) {
+      self.cp.call('StartTransaction');
+    });
+
+  }
+};
+
+export.modules = myPlugin;
+</code></pre>
+
+<h3>Setting a function when a connection event occurs</h3>
+
+<p>When the connection between the charge point and the central system is lost, we want to display a message.</p>
+
+<pre><code>var myPlugin = {
+  name: 'My Plugin',
+  description: 'Charge point plugin example for the tutorial',
+  author: 'myself',
+
+  ocpp_version: '1.6',
+  system: 'cs',
+
+  onLoad: function() {
+    var self = this;
+
+    self.cp.call('BootNotification', {
+      chargePointVendor: "Vendor",
+      chargePointModel: "Model"
+    });
+
+    self.onResult('BootNotification', function(values) {
+      self.log('Heartbeat interval value:' + values.heartbeatInterval);
+    });
+
+    self.onCall('RemoteStartTransaction', function(values) {
+      self.cp.call('StartTransaction');
+    });
+
+    self.onConnectEvent(function(type, cbId) {
+      if(type == 'disconnected')
+        self.log('Connection to the Central System lost !');
+    });
+
+  }
+};
+
+export.modules = myPlugin;
+</code></pre>
+
+<h3>Creating a custom command</h3>
+
+<p>The API provides functions for parsing what the user enters in the command line interface. This process also allows the developer to create new commands. In our case, we want to create a "hello" command for displaying informations about the plugin.</p>
+
+<pre><code>var myPlugin = {
+  name: 'My Plugin',
+  description: 'Charge point plugin example for the tutorial',
+  author: 'myself',
+
+  ocpp_version: '1.6',
+  system: 'cs',
+
+  onLoad: function() {
+    var self = this;
+
+    self.cp.call('BootNotification', {
+      chargePointVendor: "Vendor",
+      chargePointModel: "Model"
+    });
+
+    self.onResult('BootNotification', function(values) {
+      self.log('Heartbeat interval value:' + values.heartbeatInterval);
+    });
+
+    self.onCall('RemoteStartTransaction', function(values) {
+      self.cp.call('StartTransaction');
+    });
+
+    self.onConnectEvent(function(type, cbId) {
+      if(type == 'disconnected')
+        self.log('Connection to the Central System lost !');
+    });
+
+    self.onCommand(function(command) {
+      var commandObj = self.parse(command);
+
+      if(commandObj.command == 'hello') {
+        self.log("Hi! I'm "+ myPlugin.name +", created by "+ myPlugin.author +"!");
+        return true;
+      }
+    });
+
+
+  }
+};
+
+export.modules = myPlugin;
+</code></pre>
+
+<p><strong>Important</strong>: If you want the simulator not to parse the command afterwards, you must return <strong>true</strong>.</p>
+
+<h3>Running the plugin</h3>
+
+<p>For testing the plugin, at first, run a charge point simulator. Available plugins can be viewed using the 'plugins' command:</p>
+
+<pre><code>&gt; plugins
+List of plugins:
+[ ] cbxs-automatic-mode.js
+[ ] cs-example.js
+[ ] helloworld.js
+[ ] myplugin.js
+</code></pre>
+
+<p>For loading our plugin, just type:</p>
+
+<pre><code>&gt; load myplugin
+
+&gt; plugins
+List of plugins:
+[ ] cbxs-automatic-mode.js
+[ ] cs-example.js
+[ ] helloworld.js
+[X] myplugin.js
+</code></pre>
+
+<p>If you want to stop the plugin without stopping the program, just type:</p>
+
+<pre><code>&gt; unload myplugin
+</code></pre>

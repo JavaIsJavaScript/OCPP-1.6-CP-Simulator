@@ -1,0 +1,19 @@
+{
+  "name": "girocppjs",
+  "description": "Experimental OCPP Simulator",
+  "version": "1.0.1",
+  "author": "GIR",
+  "homepage": "http://www.gir.fr/ocppjs",
+  "license": "BSD",
+  "engines": {
+    "node": ">=0.6.10"
+  },
+  "main": "gir-ocppjs.js",
+  "dependencies": {
+    "websocket": "~1.0.8",
+    "xml2js": "~0.2.2",
+    "node-expat": "~2.0.0",
+    "request": "~2.16.2",
+    "jayschema": "~0.2.0"
+  }
+}
