@@ -6,6 +6,8 @@ This program requires Node.js (http://nodejs.org/). Third-party packages can be 
 ### Don't forget to do this!!!!!!
 + npm install  
 
+Might give some errors in the console, but that's ok it still works.
+
 ### Running the Simulator
 + node gir-ocppjs.js  
 
