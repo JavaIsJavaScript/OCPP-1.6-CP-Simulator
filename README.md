@@ -20,7 +20,7 @@ Or just run this for simulating a ChargePoint
 
 Where REE002 will be the name of the Charge Point and ws://127.0.0.1:8080/steve/websocket/CentralSystemService the endpoint of the CentralSystem using WebSocket/JSON, ofcourse these both can be changed.
 
-See: [1.5Sim Branch](https://github.com/JavaIsJavaScript/ocpp1.6-CP-Simulator/tree/1.5-Simulator) for 1.5 Simulator, works the same as this one.
+See: [1.5-Simulator Branch](https://github.com/JavaIsJavaScript/ocpp1.6-CP-Simulator/tree/1.5-Simulator) for 1.5 Simulator, works the same as this one.
 
 ### Glitches
 + Calling UnlockConnector.req from the Central System  
