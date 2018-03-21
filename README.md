@@ -3,7 +3,7 @@ Hacky but it works for testing purposes
 
 ChargePoint > CentralSystem all working and can be called on the commandline using "bootnotification, metervalues" etc.
 
-CentralSystem > ChargePoint all 1.5 features are working (check the glitches listed below), the new features from 1.6 will return a NotImplemented.
+CentralSystem > ChargePoint all 1.5 features are working (check the glitches listed below)
 
 + TriggerMessage now returns Accepted
 
@@ -31,7 +31,7 @@ See: [1.5-Simulator Branch](https://github.com/JavaIsJavaScript/ocpp1.6-CP-Simul
 Both these functions will reconnect the simulated Charge Point but console shows that it still recieves the request and accepts it, this is just a glitch since this whole 1.6 Simulator is hacky.
 
 + SetChargingProfile not tested yet (TypeConstraintViolation)
-
++ ClearChargingProfile needs a chargingProfilePurpose whilst this is optional in the OCPP 1.6 Specifications
 
 
 
