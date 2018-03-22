@@ -6,6 +6,7 @@ ChargePoint > CentralSystem all working and can be called on the commandline usi
 CentralSystem > ChargePoint :
 + All 1.5 features are working (check the glitches listed below)
 + TriggerMessage
++ GetCompositeSchedule (Only returns "Accepted" for now, since this is required)
 
 This program requires Node.js (http://nodejs.org/). Third-party packages can be installed with the npm utility. Currently, ocppjs depends on 'websocket', 'xml2js', 'node-expat', 'request' and 'jayschema' packages:
 
