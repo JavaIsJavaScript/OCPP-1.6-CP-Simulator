@@ -7,6 +7,7 @@ CentralSystem > ChargePoint :
 + All 1.5 features are working (check the glitches listed below)
 + TriggerMessage
 + GetCompositeSchedule (Doesn't return a Charging Schedule yet.)
++ ClearChargingProfile
 
 This program requires Node.js (http://nodejs.org/). Third-party packages can be installed with the npm utility. Currently, ocppjs depends on 'websocket', 'xml2js', 'node-expat', 'request' and 'jayschema' packages:
 
