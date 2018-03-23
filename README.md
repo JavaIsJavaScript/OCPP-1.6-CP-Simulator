@@ -4,7 +4,7 @@ Hacky but it works for testing purposes
 ChargePoint > CentralSystem all working and can be called on the commandline using "bootnotification, metervalues" etc.
 
 CentralSystem > ChargePoint :
-+ All 1.5 features are working (check the glitches listed below)
++ All 1.5 features are working
 + TriggerMessage
 + GetCompositeSchedule (Doesn't return a Charging Schedule yet.)
 + ClearChargingProfile
@@ -25,10 +25,5 @@ Or just run this for simulating a ChargePoint
 Where REE002 will be the name of the Charge Point and ws://127.0.0.1:8080/steve/websocket/CentralSystemService the endpoint of the CentralSystem using WebSocket/JSON, ofcourse these both can be changed.
 
 See: [1.5-Simulator Branch](https://github.com/JavaIsJavaScript/ocpp1.6-CP-Simulator/tree/1.5-Simulator) for 1.5 Simulator, works the same as this one.
-
-### Glitches
-+ Calling UnlockConnector.req from the Central System  
-
-Both these functions will reconnect the simulated Charge Point but console shows that it still recieves the request and accepts it, this is just a glitch since this whole 1.6 Simulator is hacky.
 
 [CREDITS](http://www.gir.fr/ocppjs/)
