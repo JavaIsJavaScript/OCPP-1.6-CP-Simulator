@@ -523,7 +523,7 @@ This document is made available under the Creative Commons Attribution-NoDerivat
 	  <s:complexType name="ChargingSchedulePeriod">
         <s:sequence>
           <s:element name="startPeriod" type="s:int" minOccurs="1" maxOccurs="1" />
-          <s:element name="limit" type="tns:DecimalOne" minOccurs="1" maxOccurs="1" />
+          <s:element name="limit" type="s:int" minOccurs="1" maxOccurs="1" /> <!-- type="tns:DecimalOne" -->
           <s:element name="numberPhases" type="s:int" minOccurs="0" maxOccurs="1" />
         </s:sequence>
       </s:complexType>
