@@ -4,10 +4,8 @@ Hacky but it works for testing purposes
 ChargePoint > CentralSystem all working and can be called on the commandline using "bootnotification, metervalues" etc.
 
 CentralSystem > ChargePoint :
-+ All 1.5 features are working
-+ TriggerMessage
-+ GetCompositeSchedule (Doesn't return a Charging Schedule yet.)
-+ ClearChargingProfile
++ All 1.5 features 
++ All 1.6 features (See Bugs)
 
 This program requires Node.js (http://nodejs.org/). Third-party packages can be installed with the npm utility. Currently, ocppjs depends on 'websocket', 'xml2js', 'node-expat', 'request' and 'jayschema' packages:
 
