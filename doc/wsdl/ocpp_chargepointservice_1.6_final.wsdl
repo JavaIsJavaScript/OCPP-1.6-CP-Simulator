@@ -534,7 +534,7 @@ This document is made available under the Creative Commons Attribution-NoDerivat
           <s:element name="startSchedule" type="s:dateTime" minOccurs="0" maxOccurs="1"/>
           <s:element name="chargingRateUnit" type="tns:ChargingRateUnitType" minOccurs="1" maxOccurs="1"/>
           <s:element name="chargingSchedulePeriod" type="tns:ChargingSchedulePeriod" minOccurs="1" maxOccurs="unbounded"/>
-          <s:element name="minChargingRate" type="tns:DecimalOne" minOccurs="0" maxOccurs="1" />
+          <s:element name="minChargingRate" type="s:int" minOccurs="0" maxOccurs="1" />
         </s:sequence>
       </s:complexType>
 
