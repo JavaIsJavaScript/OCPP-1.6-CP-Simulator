@@ -17,4 +17,5 @@ See: [1.5-Simulator Branch](https://github.com/JavaIsJavaScript/ocpp1.6-CP-Simul
 
 ### Bugs
 + None known currently
-[CREDITS](http://www.gir.fr/ocppjs/)
+  
+  [CREDITS](http://www.gir.fr/ocppjs/)
